@@ -26,7 +26,7 @@ io.on("connection",function(socket)
        });
 
        socket.join(query.room);
-       socket.emit("message",allmessages.generateMessage("Welcome"));
+       socket.emit("message",allmessages.generateMessage("Admin","Welcome"));
    
    socket.broadcast.to(query.room).emit("message",allmessages.generateMessage(query.username+" has joined in"));
     io.to(query.room).emit("roomData",{
@@ -46,13 +46,13 @@ io.on("connection",function(socket)
        }
        var user=roommanaging.getUser(socket.id);
        
-       io.to(user.room).emit("message",allmessages.generateMessage(message));
+       io.to(user.room).emit("message",allmessages.generateMessage(user.username,message));
        callback();
    })
    
    socket.on("sendLocation",function(coords,callback) {
        var user=roommanaging.getUser(socket.id);
-       io.to(user.room).emit("locationMessage",allmessages.generateLocationMessage("https://google.com/maps?q="+coords.latitude+","+coords.longitude));
+       io.to(user.room).emit("locationMessage",allmessages.generateLocationMessage(user.username,"https://google.com/maps?q="+coords.latitude+","+coords.longitude));
        callback();
    })
    

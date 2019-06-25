@@ -26,6 +26,7 @@ socket.on("message",function(message)
     console.log(message);
     var html=Mustache.render(messageTemplate,{
         message:message.text,
+        username:message.username,
         createdAt:moment(message.createdAt).format("h:mm a")
     });
     messages.insertAdjacentHTML("beforeend",html);
@@ -36,6 +37,7 @@ socket.on("message",function(message)
 socket.on("locationMessage",function(url)
 {
     var html=Mustache.render(locationMessageTemplate,{
+        username:url.username,
         url:url.url,
         createdAt:moment(url.createdAt).format("h:mm a")
     });
